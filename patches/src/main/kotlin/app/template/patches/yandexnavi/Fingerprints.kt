@@ -40,3 +40,20 @@ internal object YandexMapsDebugM0PanelVisibilityFingerprint : Fingerprint(
         opcode(Opcode.IF_EQZ),
     ),
 )
+
+/**
+ * `com.yandex.passport.internal.c0.a(...)` — Kotlin `releaseRuntimeChecks` (28.6.5, classes12.dex).
+ * Unique string: Passport fatal *application signature mismatch*.
+ */
+internal object PassportReleaseRuntimeChecksSignatureCrashFingerprint : Fingerprint(
+    definingClass = "Lcom/yandex/passport/internal/c0;",
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.STATIC, AccessFlags.FINAL),
+    name = "a",
+    returnType = "V",
+    parameters = listOf(
+        "Lcom/yandex/passport/internal/c0;",
+        "Landroid/content/Context;",
+        "Lio/appmetrica/analytics/IReporterYandex;",
+    ),
+    strings = listOf("Internal error, application signature mismatch"),
+)
