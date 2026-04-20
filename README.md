@@ -67,6 +67,16 @@ cd morphe-patches-navi
 | Patch | Effect |
 |-------|--------|
 | **Enable debug panel** | Forces `ru.yandex.yandexmaps.debug.v0.c()Z` and `ru.yandex.yandexmaps.debug.m0.i()Z` to always return `true`, unlocking the internal Maps‑shell debug drawer gate (28.6.5 / versionCode `739172520`). |
+| **Bypass Passport signature mismatch crash** | Removes the `IllegalStateException` / `PassportRuntime` block in `com.yandex.passport.internal.c0` `releaseRuntimeChecks` so a Morphe‑signed APK can start past Passport init (fragile across versions). |
+| **Debuggable application manifest** | Sets `android:debuggable="true"` on `<application>` so Passport takes the debuggable branch in the same checks (use only on a research device). |
+
+## Вход в аккаунт после патча (отдельный профиль)
+
+Переподписанный Morphe‑сборкой Навигатор на **основном пользователе** часто **не логинится**, если другой пакет Яндекса уже зарегистрировал в системе тип аккаунта **`com.yandex.passport`** (типичный владелец — **«Яндекс с Алисой»**, `com.yandex.aliceapp`: в `adb shell dumpsys account` видно `AuthenticatorDescription {type=com.yandex.passport}` на `…aliceapp…AuthenticationService`). Тогда при входе возможна ошибка вроде **`authorizeByCookie` / `cannot explicitly add accounts of type: com.yandex.passport`** — это ограничение **AccountManager**, а не патча debuggable.
+
+**Проверенный обход:** установить **только** патченый Навигатор в **отдельном рабочем профиле** (work profile / второй пользователь Android), куда **не ставить** приложение‑владелец `com.yandex.passport` с основного профиля. В таком профиле authenticator для `com.yandex.passport` принадлежит самому Навигатору, и вход проходит.
+
+Подробнее: родительский репозиторий **`navi`**, файл **`AGENTS.md`** (раздел Morphe: Passport, `dumpsys account`, конфликт с Алисой).
 
 ## Compatibility
 
