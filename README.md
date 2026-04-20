@@ -14,7 +14,12 @@ Bytecode patches for **Yandex Navigator** (`ru.yandex.yandexnavi`), aligned with
 
 Параметр **`name`** задаёт подпись в списке источников; без него Morphe показывает **«Unnamed»**.
 
-Открой ссылку **на телефоне**, где установлен Morphe.
+Открой эту ссылку **в браузере на телефоне** (или из README) — Morphe подхватит её как **App Link**. **Не вставляй** `morphe.software/add-source?…` в поле «URL пачки / patch bundle» внутри Morphe: для произвольных хостов приложение требует путь, оканчивающийся на **`.json`**, и покажет тост **«Patch bundle URL must point to a .json file»**.
+
+**Если добавляешь источник вручную в Morphe** (вставкой URL в настройках), укажи **одно** из значений:
+
+- `https://github.com/vladon/morphe-patches-navi` — репозиторий без лишнего пути (`/releases`, `/tree/…` не подходят для этого поля).
+- либо прямой raw-файл: `https://raw.githubusercontent.com/vladon/morphe-patches-navi/main/patches-bundle.json`
 
 **Важно:** Morphe Manager читает **`patches-bundle.json` с ветки `main` через `raw.githubusercontent.com`**, а не из GitHub Release. В этом файле на `main` должно быть заполнено поле **`download_url`** (указывает на `.mpp` в Releases). Workflow **Manual publish MPP** после релиза **коммитит** обновлённые `patches-bundle.json` и `patches-list.json` в `main`.
 
@@ -31,7 +36,7 @@ Bytecode patches for **Yandex Navigator** (`ru.yandex.yandexnavi`), aligned with
 1. На GitHub: **Actions** → **Manual publish MPP** → **Run workflow** → поле **version** (например `1.0.0`, как в `gradle.properties`).
 2. Дождись зелёной галочки.
 3. В репозитории появится **Release** `v1.0.0` с артефактами: `patches-1.0.0.mpp`, `patches-list.json`, `patches-bundle.json`.
-4. Снова открой ссылку **add-source** выше в Morphe на устройстве.
+4. Снова открой ссылку **add-source** выше **в браузере** на устройстве (не вставляй её в поле URL пачки внутри приложения).
 
 Повторный запуск с той же версией: сначала **удали** старый release/tag `v…` вручную на GitHub, либо увеличь версию в workflow.
 
