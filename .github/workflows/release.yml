@@ -1,11 +1,11 @@
+# Semantic-release + GPG signing (template default). This repo publishes via **Manual publish MPP**
+# without GPG; leaving `push` enabled caused every push to main to fail on missing `GPG_PRIVATE_KEY`.
+# To use this workflow: add repo secrets `GPG_PRIVATE_KEY`, `GPG_PASSPHRASE`, and var `GPG_FINGERPRINT`,
+# then run **Actions → Release → Run workflow**.
 name: Release
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-      - dev
 
 jobs:
   release:
