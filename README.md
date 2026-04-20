@@ -18,6 +18,8 @@ Bytecode patches for **Yandex Navigator** (`ru.yandex.yandexnavi`), aligned with
 
 **Важно:** Morphe Manager читает **`patches-bundle.json` с ветки `main` через `raw.githubusercontent.com`**, а не из GitHub Release. В этом файле на `main` должно быть заполнено поле **`download_url`** (указывает на `.mpp` в Releases). Workflow **Manual publish MPP** после релиза **коммитит** обновлённые `patches-bundle.json` и `patches-list.json` в `main`.
 
+Поле **`created_at`** должно быть в виде **`YYYY-MM-DDTHH:mm:ss` без суффикса `Z`** (как в официальном [morphe-patches](https://raw.githubusercontent.com/MorpheApp/morphe-patches/main/patches-bundle.json)). С `…Z` десериализация в приложении падает, и в тосте видно обрезанный JSON (`Failed to download 'Unnamed': { "created_at": …`).
+
 Пока **нет релиза** с `.mpp` и актуального **`download_url`** на `main`, загрузка пачки не сработает — сначала опубликуй релиз (ниже).
 
 ---

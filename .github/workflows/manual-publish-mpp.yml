@@ -51,7 +51,8 @@ jobs:
           VER="${{ github.event.inputs.version }}"
           REPO="${{ github.repository }}"
           URL="https://github.com/${REPO}/releases/download/v${VER}/patches-${VER}.mpp"
-          TS=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+          # Morphe Manager deserializes created_at as LocalDateTime (no trailing Z) — same as morphe-patches releases.
+          TS=$(date -u +%Y-%m-%dT%H:%M:%S)
           jq -n --arg v "$VER" --arg url "$URL" --arg ts "$TS" \
             '{created_at: $ts, description: "Yandex Navigator Morphe patches (manual publish).", download_url: $url, signature_download_url: "", version: $v}' \
             > patches-bundle.json
@@ -67,7 +68,7 @@ jobs:
             patches-list.json \
             patches-bundle.json \
             --title "v${VER}" \
-            --notes "Morphe patches bundle. Add source: https://morphe.software/add-source?github=${{ github.repository }}"
+            --notes "Morphe patches bundle. Add source: https://morphe.software/add-source?github=${{ github.repository }}&name=Yandex+Navigator+patches"
 
       # Morphe Manager loads patches-bundle.json from raw.githubusercontent.com/.../main/ — not from the release.
       # Without this commit, download_url on main stays empty and the app fails to fetch the .mpp.
