@@ -31,7 +31,7 @@ Bytecode patches for **Yandex Navigator** (`ru.yandex.yandexnavi`), aligned with
 
 ## Опубликовать первый релиз (без GPG / без semantic-release)
 
-Штатный **`release.yml`** ждёт **GPG-секреты** для semantic-release; в этом репозитории он **только по ручному запуску** (`workflow_dispatch`), чтобы пуши в `main` не падали без секретов. Если настроишь GPG — **Actions → Release → Run workflow**. Иначе используй ручной workflow:
+Штатный **`release.yml`** при **каждом push** в `main` / `dev` гоняет **Gradle-сборку** патчей. Блок **semantic-release** (GPG, npm, тег, GitHub Release из `.releaserc`) выполняется **только если** в настройках репозитория задан секрет **`GPG_PRIVATE_KEY`** (и при необходимости **`GPG_PASSPHRASE`**, переменная **`GPG_FINGERPRINT`**). Без них workflow **не падает** — только проверка сборки. Публикацию **`.mpp` без GPG** по-прежнему делай через **Manual publish MPP**:
 
 1. На GitHub: **Actions** → **Manual publish MPP** → **Run workflow** → поле **version** (например `1.0.0`, как в `gradle.properties`).
 2. Дождись зелёной галочки.
