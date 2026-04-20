@@ -10,11 +10,15 @@ Bytecode patches for **Yandex Navigator** (`ru.yandex.yandexnavi`), aligned with
 
 **Добавить источник одной ссылкой (рекомендуется):**
 
-[https://morphe.software/add-source?github=vladon/morphe-patches-navi](https://morphe.software/add-source?github=vladon/morphe-patches-navi)
+[https://morphe.software/add-source?github=vladon/morphe-patches-navi&name=Yandex+Navigator+patches](https://morphe.software/add-source?github=vladon/morphe-patches-navi&name=Yandex+Navigator+patches)
 
-Открой эту ссылку **на телефоне**, где установлен Morphe (см. страницу [Add Source](https://morphe.software/add-source?github=vladon/morphe-patches-navi)).
+Параметр **`name`** задаёт подпись в списке источников; без него Morphe показывает **«Unnamed»**.
 
-Пока **нет ни одного релиза** с `.mpp`, Morphe не сможет ничего загрузить — сначала опубликуй релиз (ниже).
+Открой ссылку **на телефоне**, где установлен Morphe.
+
+**Важно:** Morphe Manager читает **`patches-bundle.json` с ветки `main` через `raw.githubusercontent.com`**, а не из GitHub Release. В этом файле на `main` должно быть заполнено поле **`download_url`** (указывает на `.mpp` в Releases). Workflow **Manual publish MPP** после релиза **коммитит** обновлённые `patches-bundle.json` и `patches-list.json` в `main`.
+
+Пока **нет релиза** с `.mpp` и актуального **`download_url`** на `main`, загрузка пачки не сработает — сначала опубликуй релиз (ниже).
 
 ---
 

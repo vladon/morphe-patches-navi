@@ -1,4 +1,17 @@
 {
-  "version": "",
-  "patches": []
+  "version": "v1.0.0",
+  "patches": [
+    {
+      "name": "Enable debug panel",
+      "description": "Unlocks the internal Maps-shell debug panel gate (Yandexoid prefs + swipable experiment).",
+      "use": true,
+      "dependencies": [],
+      "compatiblePackages": {
+        "ru.yandex.yandexnavi": [
+          "28.6.5"
+        ]
+      },
+      "options": []
+    }
+  ]
 }

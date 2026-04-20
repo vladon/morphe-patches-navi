@@ -68,3 +68,18 @@ jobs:
             patches-bundle.json \
             --title "v${VER}" \
             --notes "Morphe patches bundle. Add source: https://morphe.software/add-source?github=${{ github.repository }}"
+
+      # Morphe Manager loads patches-bundle.json from raw.githubusercontent.com/.../main/ — not from the release.
+      # Without this commit, download_url on main stays empty and the app fails to fetch the .mpp.
+      - name: Commit bundle metadata to main
+        run: |
+          VER="${{ github.event.inputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add patches-bundle.json patches-list.json
+          if git diff --staged --quiet; then
+            echo "No JSON changes to commit (already synced)."
+            exit 0
+          fi
+          git commit -m "chore: sync patches-bundle.json and patches-list.json for v${VER}"
+          git push origin HEAD:main
