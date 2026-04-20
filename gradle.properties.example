@@ -1,5 +1,10 @@
-# Скопируй в файл `gradle.properties` в этой же папке (файл уже в .gitignore — в git не попадёт).
-# Значения возьми из GitHub — см. README.md раздел «GitHub».
+# Скопируй этот файл как `gradle.properties` в корень проекта (локальный файл в .gitignore — не попадёт в git).
 
+org.gradle.parallel=true
+org.gradle.caching=true
+kotlin.code.style=official
+version=1.0.0
+
+# GitHub Packages (Morphe) — см. README.md
 gpr.user=ВСТАВЬ_СВОЙ_ЛОГИН_GITHUB
 gpr.key=ВСТАВЬ_СЮДА_PAT_КАК_ОДНУ_СТРОКУ_БЕЗ_КАВЫЧЕК

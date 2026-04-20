@@ -1,5 +1,7 @@
 # Morphe patches — Yandex Navigator
 
+Репозиторий: **[github.com/vladon/morphe-patches-navi](https://github.com/vladon/morphe-patches-navi)**
+
 Bytecode patches for **Yandex Navigator** (`ru.yandex.yandexnavi`), aligned with reverse‑engineering notes in the parent `navi` repo (`AGENTS.md`).
 
 ## Included patches
@@ -24,16 +26,7 @@ Bytecode patches for **Yandex Navigator** (`ru.yandex.yandexnavi`), aligned with
 
 ## Локально: подставить значения и собрать
 
-**Вариант A (удобно):** в каталоге `morphe-patches-navi` создай файл **`gradle.properties`** (он в `.gitignore`, в репозиторий не коммить).
-
-Скопируй шаблон и подставь свои данные:
-
-```text
-gpr.user=ТВОЙ_ЛОГИН_GITHUB
-gpr.key=ghp_вставь_полный_токен_одной_строкой
-```
-
-Шаблон лежит рядом: [`gradle.properties.example`](gradle.properties.example).
+**Вариант A (удобно):** скопируй [`gradle.properties.example`](gradle.properties.example) в файл **`gradle.properties`** в том же каталоге (он в `.gitignore` и **не коммитится**). Подставь `gpr.user` и `gpr.key`.
 
 Затем:
 
