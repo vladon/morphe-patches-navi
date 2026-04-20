@@ -122,8 +122,8 @@ gradle-app.setting
 # Dependency directories
 node_modules/
 
-# gradle properties, due to Github token
-./gradle.properties
+# Секреты Gradle — только в пользовательском ~/.gradle/gradle.properties (gpr.user / gpr.key).
+# Корневой gradle.properties в репозитории отслеживается (version и флаги сборки).
 
 # Ignore IDEA files
 .idea/

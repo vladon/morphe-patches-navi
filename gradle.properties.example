@@ -1,10 +1,12 @@
-# Скопируй этот файл как `gradle.properties` в корень проекта (локальный файл в .gitignore — не попадёт в git).
-
-org.gradle.parallel=true
-org.gradle.caching=true
-kotlin.code.style=official
-version=1.0.0
-
-# GitHub Packages (Morphe) — см. README.md
-gpr.user=ВСТАВЬ_СВОЙ_ЛОГИН_GITHUB
-gpr.key=ВСТАВЬ_СЮДА_PAT_КАК_ОДНУ_СТРОКУ_БЕЗ_КАВЫЧЕК
+# Секреты для GitHub Packages (плагин Morphe) НЕ хранятся в репозитории.
+# Добавь в файл пользователя (один раз):
+#   Windows: %USERPROFILE%\.gradle\gradle.properties
+#   Linux/macOS: ~/.gradle/gradle.properties
+#
+# Содержимое:
+# gpr.user=ТВОЙ_ЛОГИН_GITHUB
+# gpr.key=ghp_...
+#
+# Локальная сборка: ./gradlew :patches:buildAndroid
+#
+# Корневой gradle.properties в репозитории — только version и флаги Gradle (без токена).

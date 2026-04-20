@@ -4,55 +4,65 @@
 
 Bytecode patches for **Yandex Navigator** (`ru.yandex.yandexnavi`), aligned with reverse‑engineering notes in the parent `navi` repo (`AGENTS.md`).
 
+## Как подключить в Morphe Manager (важно)
+
+Приложение **не качает патчи с «пустой» страницы репозитория** — ему нужен **GitHub Release** с файлом **`patches-<версия>.mpp`** и актуальные **`patches-list.json` / `patches-bundle.json`** (см. [шаблон Morphe Patches — Usage](https://github.com/MorpheApp/morphe-patches-template#-usage) и [документацию Morphe](https://github.com/MorpheApp/morphe-documentation/tree/main/docs/morphe-development)).
+
+**Добавить источник одной ссылкой (рекомендуется):**
+
+[https://morphe.software/add-source?github=vladon/morphe-patches-navi](https://morphe.software/add-source?github=vladon/morphe-patches-navi)
+
+Открой эту ссылку **на телефоне**, где установлен Morphe (см. страницу [Add Source](https://morphe.software/add-source?github=vladon/morphe-patches-navi)).
+
+Пока **нет ни одного релиза** с `.mpp`, Morphe не сможет ничего загрузить — сначала опубликуй релиз (ниже).
+
+---
+
+## Опубликовать первый релиз (без GPG / без semantic-release)
+
+Штатный `release.yml` из шаблона ждёт **GPG-секреты** для semantic-release. Если их нет, используй ручной workflow:
+
+1. На GitHub: **Actions** → **Manual publish MPP** → **Run workflow** → поле **version** (например `1.0.0`, как в `gradle.properties`).
+2. Дождись зелёной галочки.
+3. В репозитории появится **Release** `v1.0.0` с артефактами: `patches-1.0.0.mpp`, `patches-list.json`, `patches-bundle.json`.
+4. Снова открой ссылку **add-source** выше в Morphe на устройстве.
+
+Повторный запуск с той же версией: сначала **удали** старый release/tag `v…` вручную на GitHub, либо увеличь версию в workflow.
+
+---
+
+## Локальная сборка (ПК)
+
+Учётные данные для `maven.pkg.github.com/MorpheApp/registry` — в **`%USERPROFILE%\.gradle\gradle.properties`** (или переменные окружения `GITHUB_ACTOR` / `GITHUB_TOKEN`):
+
+```properties
+gpr.user=ТВОЙ_ЛОГИН_GITHUB
+gpr.key=ghp_...
+```
+
+Сборка MPP для Android:
+
+```powershell
+cd morphe-patches-navi
+.\gradlew.bat :patches:buildAndroid generatePatchesList
+```
+
+Артефакт: `patches\build\libs\patches-<version>.mpp`.
+
+---
+
 ## Included patches
 
 | Patch | Effect |
 |-------|--------|
 | **Enable debug panel** | Forces `ru.yandex.yandexmaps.debug.v0.c()Z` and `ru.yandex.yandexmaps.debug.m0.i()Z` to always return `true`, unlocking the internal Maps‑shell debug drawer gate (28.6.5 / versionCode `739172520`). |
 
----
-
-## Что сделать на GitHub (один раз)
-
-1. Войди на [github.com](https://github.com) под своим аккаунтом (логин — это **`gpr.user`** / `GITHUB_ACTOR`).
-2. Открой: **Settings** (аватар → Settings) → внизу слева **Developer settings** → **Personal access tokens** → **Tokens (classic)** → **Generate new token (classic)**.
-3. Укажи имя токена (например `Morphe Gradle`), срок действия по желанию.
-4. Включи scope **`read:packages`** (достаточно, чтобы Gradle тянул артефакты Morphe из GitHub Packages). Остальные галочки не обязательны.
-5. Нажми **Generate token**, **сразу скопируй** строку вида `ghp_xxxxxxxx…` — второй раз GitHub её не покажет. Это значение для **`gpr.key`** / `GITHUB_TOKEN`.
-
-Отдельно приглашение в репозиторий Morphe **не нужно**: пакеты публичного org `MorpheApp` читаются с любого аккаунта при наличии PAT с `read:packages`.
-
----
-
-## Локально: подставить значения и собрать
-
-**Вариант A (удобно):** скопируй [`gradle.properties.example`](gradle.properties.example) в файл **`gradle.properties`** в том же каталоге (он в `.gitignore` и **не коммитится**). Подставь `gpr.user` и `gpr.key`.
-
-Затем:
-
-```powershell
-cd d:\projects\navi\morphe-patches-navi
-.\gradlew.bat :patches:build
-```
-
-**Вариант B (на сессию PowerShell):**
-
-```powershell
-cd d:\projects\navi\morphe-patches-navi
-$env:GITHUB_ACTOR = "ТВОЙ_ЛОГИН_GITHUB"
-$env:GITHUB_TOKEN = "ghp_вставь_полный_токен"
-.\gradlew.bat :patches:build
-```
-
-После успешной сборки: **`patches/build/libs/*.mpp`** и при необходимости **`patches-list.json`** (задача `generatePatchesList` при `publish`).
-
----
-
 ## Compatibility
 
-Declared in `Constants.kt`: package `ru.yandex.yandexnavi`, `ApkFileType.APKS`, version **28.6.5**, signing cert SHA‑256 from official Play `base.apk` (see `apksigner verify --print-certs`).
+Declared in `Constants.kt`: package `ru.yandex.yandexnavi`, `ApkFileType.APKS`, version **28.6.5**, signing cert SHA‑256 from official Play `base.apk`.
 
 ## References
 
 - [Morphe development](https://github.com/MorpheApp/morphe-documentation/tree/main/docs/morphe-development)
+- [Morphe Patches template README](https://github.com/MorpheApp/morphe-patches-template/blob/main/README.md)
 - [Morphe Patcher docs](https://github.com/MorpheApp/morphe-patcher/blob/main/docs/README.md)
