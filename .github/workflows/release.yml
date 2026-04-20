@@ -19,6 +19,9 @@ jobs:
       id-token: write
       attestations: write
     runs-on: ubuntu-latest
+    # `secrets` cannot be used in step-level `if` (workflow parse error); boolean via env is OK.
+    env:
+      HAS_GPG: ${{ secrets.GPG_PRIVATE_KEY != '' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -38,18 +41,18 @@ jobs:
         run: ./gradlew :patches:buildAndroid generatePatchesList clean
 
       - name: Setup Node.js
-        if: ${{ secrets.GPG_PRIVATE_KEY != '' }}
+        if: ${{ env.HAS_GPG == 'true' }}
         uses: actions/setup-node@v6
         with:
           node-version: 'lts/*'
           cache: 'npm'
 
       - name: Install dependencies
-        if: ${{ secrets.GPG_PRIVATE_KEY != '' }}
+        if: ${{ env.HAS_GPG == 'true' }}
         run: npm install
 
       - name: Import GPG key
-        if: ${{ secrets.GPG_PRIVATE_KEY != '' }}
+        if: ${{ env.HAS_GPG == 'true' }}
         uses: crazy-max/ghaction-import-gpg@v6
         with:
           gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
@@ -57,14 +60,14 @@ jobs:
           fingerprint: ${{ vars.GPG_FINGERPRINT }}
 
       - name: Release
-        if: ${{ secrets.GPG_PRIVATE_KEY != '' }}
+        if: ${{ env.HAS_GPG == 'true' }}
         uses: cycjimmy/semantic-release-action@v5
         id: release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Attest
-        if: ${{ secrets.GPG_PRIVATE_KEY != '' && steps.release.outputs.new_release_published == 'true' }}
+        if: ${{ env.HAS_GPG == 'true' && steps.release.outputs.new_release_published == 'true' }}
         uses: actions/attest-build-provenance@v3
         with:
           subject-name: 'Morphe Patches ${{ steps.release.outputs.new_release_git_tag }}'
